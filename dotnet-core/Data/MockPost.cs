@@ -7,28 +7,28 @@ namespace dotnet_core.Data
 {
 public class MockPost : IPost
     {
-    private static List<Post> posts= new List<Post>
+    /*private static List<Post> posts= new List<Post>
     {
         new Post{id=0, title="Boil an egg", content="Boil water"},
         new Post{id=1, title="Cut bread", content="Get a knife"},
         new Post{id=2, title="Make cup of tea", content="blah blah"}
-    };
+    };*/
 
 
-    // private readonly DataContext _context;
-    // public MockPost(DataContext dbcontext)
-    // {  
-    //      _context=dbcontext;
+    private readonly DataContext _context;
+    public MockPost(DataContext dbcontext)
+    {  
+         _context=dbcontext;
 
-    // }
+    }
  
-    public async Task<ServiceResponse<List<Post>>> Getter(){
+    /*public async Task<ServiceResponse<List<Post>>> Getter(){
         ServiceResponse<List<Post>> ob=new ServiceResponse<List<Post>>();
         List<Post> op=new List<Post>();
         
         ob.Data=posts;
         return ob;
-    }
+    }*/
     public async Task<ServiceResponse<List<Post>>> GetterDB(){
         ServiceResponse<List<Post>> ob=new ServiceResponse<List<Post>>();
         List<Post> db=new List<Post>();
@@ -39,7 +39,7 @@ public class MockPost : IPost
 
 
 
-    public async Task<ServiceResponse<Post>> GetPostById(int id){
+   /* public async Task<ServiceResponse<Post>> GetPostById(int id){
        ServiceResponse<Post> x=new ServiceResponse<Post>();     
        try{
         foreach (Post cmd in posts) 
@@ -53,7 +53,7 @@ public class MockPost : IPost
         x.Success=false;
        }        
         return x;  
-    }
+    }*/
     public async Task<ServiceResponse<Post>> GetPostByIdDB(int id){
         ServiceResponse<Post> ob=new ServiceResponse<Post>();        
         Post x=await _context.Posts.FirstOrDefaultAsync(i=>i.id==id);
@@ -71,7 +71,7 @@ public class MockPost : IPost
 
         return ob;
     }
-    public async Task<ServiceResponse<List<Post>>> CreatePostDB(Post data){
+   /* public async Task<ServiceResponse<List<Post>>> CreatePostDB(Post data){
         ServiceResponse<List<Post>> ob=new ServiceResponse<List<Post>>();
         
         await _context.Commands.AddAsync(cmd);
@@ -80,12 +80,12 @@ public class MockPost : IPost
         ob.Data =await _context.Posts.ToListAsync();
         return ob;
 
-    }
+    }*/
 
 
 
 
-    public async Task<ServiceResponse<List<Post>>> UpdatePost( Post model, int id){
+    /*public async Task<ServiceResponse<List<Post>>> UpdatePost( Post model, int id){
         ServiceResponse<List<Post>> ob=new ServiceResponse<List<Post>>();
         foreach (Post cmd in posts){
             if(cmd.id==id){
@@ -95,7 +95,7 @@ public class MockPost : IPost
         }
         ob.Data=posts;
         return ob;
-    }
+    }*/
     public async Task<ServiceResponse<Post>> UpdatePostDB(Post data,int id){
        ServiceResponse<Post> ob=new ServiceResponse<Post>();
 
@@ -118,7 +118,7 @@ public class MockPost : IPost
 
 
 
-    public async Task<ServiceResponse<List<Post>>> Delete(int id){
+   /* public async Task<ServiceResponse<List<Post>>> Delete(int id){
         ServiceResponse<List<Post>> ob=new ServiceResponse<List<Post>>();
         List<Post> l=new List<Post>();
         foreach (Post cmd in posts){
@@ -128,7 +128,7 @@ public class MockPost : IPost
         posts=l;
         ob.Data=posts;
         return ob;
-    } 
+    } */
     public async Task<ServiceResponse<List<Post>>> DeleteDB(int id){
         ServiceResponse<Post> ob=new ServiceResponse<Post>();
         try{
