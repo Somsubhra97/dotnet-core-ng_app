@@ -24,7 +24,7 @@ namespace dotnet_core.Controllers
 
         [HttpGet]        
         public async Task<IActionResult> GetAll (){
-           var ob=await _repository.Getter();
+           var ob=await _repository.GetterDB();
                     
              return Ok(ob);
         } 
@@ -34,7 +34,7 @@ namespace dotnet_core.Controllers
         [HttpGet("{id}", Name="GetPostById")]
         public async Task<IActionResult> GetPostById(int id)
         {
-             ServiceResponse<Post> x=await _repository.GetPostById(id);
+             ServiceResponse<Post> x=await _repository.GetPostByIdDB(id);
             if(x.Success)
               return Ok(x);  
             return NotFound();                
@@ -46,7 +46,7 @@ namespace dotnet_core.Controllers
     [HttpPost]
     public async Task<IActionResult> Add(Post cmd){
        
-            var ret=await _repository.AddPost(cmd); 
+            var ret=await _repository.AddPostDB(cmd); 
             Console.WriteLine(cmd) ;                     
             return Ok(ret);            
         }
@@ -55,7 +55,7 @@ namespace dotnet_core.Controllers
    
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(Post cmd,int id){       
-            var ret=await _repository.UpdatePost(cmd,id);        
+            var ret=await _repository.UpdatePostDB(cmd,id);        
             if(!ret.Success){
                return NotFound(ret);
              }      
@@ -66,7 +66,7 @@ namespace dotnet_core.Controllers
     
     public async Task<IActionResult> Delete(int id)
         {
-            ServiceResponse<List<Post>> response = await _repository.Delete(id);
+            ServiceResponse<List<Post>> response = await _repository.DeleteDB(id);
             return Ok(response);
         }         
     
