@@ -64,14 +64,14 @@ public class MockPost : IPost
 
 
 
-    public async Task<ServiceResponse<List<Post>>> AddPost(Post model){
+   /* public async Task<ServiceResponse<List<Post>>> AddPost(Post model){
         ServiceResponse<List<Post>> ob=new ServiceResponse<List<Post>>();
         posts.Add(model);
         ob.Data=posts;
 
         return ob;
-    }
-   /* public async Task<ServiceResponse<List<Post>>> CreatePostDB(Post data){
+    }*/
+    public async Task<ServiceResponse<List<Post>>> CreatePostDB(Post data){
         ServiceResponse<List<Post>> ob=new ServiceResponse<List<Post>>();
         
         await _context.Commands.AddAsync(cmd);
@@ -80,7 +80,7 @@ public class MockPost : IPost
         ob.Data =await _context.Posts.ToListAsync();
         return ob;
 
-    }*/
+    }
 
 
 
