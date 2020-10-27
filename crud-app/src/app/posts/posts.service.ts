@@ -4,13 +4,14 @@ import { Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { Router } from "@angular/router";
 
-import { Post } from "./post.model";
+import { Data,Post } from "./post.model";
 
 @Injectable({ providedIn: "root" })
 export class PostsService {
 
-  private posts: Post[] = [];
-  private postsUpdated = new Subject<Post[]>();
+  private posts: Post[] = [];  
+  private isLoading=true;
+  private postsUpdated = new Subject<Data>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -23,7 +24,13 @@ export class PostsService {
       .get("http://localhost:5000/api/posts")
        .subscribe(x => {
         this.posts=x.data;
-        this.postsUpdated.next([...this.posts]);
+        this.isLoading=false;
+
+        const receiver:Data={ 
+          info:this.posts,
+          isLoading:false
+        }
+        this.postsUpdated.next(receiver);
       });
   }
 
@@ -32,38 +39,54 @@ export class PostsService {
     }
 
   addPost(title: string, content: string) {
+    this.isLoading=true;
     const post: Post = { id: Math.floor(Math.random() * (100 - 1) + 1), title: title, content: content };
     this.http
       .post(
         "https://localhost:5001/api/posts", post)
       .subscribe(res => {        
         this.posts.push(res.data);
-        this.postsUpdated.next([...this.posts]);
+
+        const receiver:Data={ 
+          info:this.posts,
+          isLoading:false
+        }
+        this.postsUpdated.next(receiver);        
         this.router.navigate(["/"]);
       });
    
   }
 
   updatePost(id: number, title: string, content: string) {
+    this.isLoading=true;
     const post: Post = { id: id, title: title, content: content };
     this.http
       .put(`https://localhost:5001/api/posts/${id}`, post)
       .subscribe(()=> {          
-         this.posts=this.posts.map(i=>i.id===id ? post : i);        
-        this.postsUpdated.next([...this.posts]);
+         this.posts=this.posts.map(i=>i.id===id ? post : i); 
+         
+         const receiver:Data={ 
+          info:this.posts,
+          isLoading:false
+        }
+        this.postsUpdated.next(receiver);  
         this.router.navigate(["/"]);
       });
     }
   
 
   deletePost(postId: number) { 
-
+   this.isLoading=true;
    this.http
       .delete("https://localhost:5001/api/posts/" + postId)
       .subscribe(() => {
         this.posts = this.posts.filter(post => post.id !== postId);
-         
-        this.postsUpdated.next([...this.posts]);
+        
+        const receiver:Data={ 
+          info:this.posts,
+          isLoading:false
+        }
+        this.postsUpdated.next(receiver);          
       });
  }
 }
