@@ -9,9 +9,9 @@ public class MockPost : IPost
     {
     private static List<Post> posts= new List<Post>
     {
-        new Post{id=0, title="Boil an egg", content="Boil water"},
-        new Post{id=1, title="Cut bread", content="Get a knife"},
-        new Post{id=2, title="Make cup of tea", content="blah blah"}
+        new Post{id=0, title="Post#1", content="My Post"},
+        new Post{id=1, title="Post#2", content="Second Post"},
+        new Post{id=2, title="Post#3", content="Thrid Post"}
     };
  
     public async Task<ServiceResponse<List<Post>>> Getter(){

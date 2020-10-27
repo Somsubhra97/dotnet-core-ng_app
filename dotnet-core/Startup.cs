@@ -41,19 +41,14 @@ namespace dotnet_core
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-           app.UseCors(builder =>
+            app.UseCors(builder =>
              {
                builder.AllowAnyHeader();
                builder.AllowAnyOrigin();
                builder.AllowAnyMethod();
-             }); 
-            
-            
+             });
+            app.UseHttpsRedirection();
+            app.UseRouting();         
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

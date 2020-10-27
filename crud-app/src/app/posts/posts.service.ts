@@ -20,7 +20,7 @@ export class PostsService {
 
   getPosts() {
     this.http
-      .get("https://localhost:5001/api/posts")
+      .get("http://localhost:5000/api/posts")
        .subscribe(x => {
         this.posts=x.data;
         this.postsUpdated.next([...this.posts]);
