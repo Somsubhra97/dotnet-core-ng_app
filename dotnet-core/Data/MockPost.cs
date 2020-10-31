@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using dotnet_core.Models;
+using dotnet_core.Dtos.Post;
 using System.Threading.Tasks;
 using System;
 
