@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 
 using dotnet_core.Data;
+using dotnet_core.Dtos.Post;
 using dotnet_core.Models;
 
 namespace dotnet_core.Controllers
