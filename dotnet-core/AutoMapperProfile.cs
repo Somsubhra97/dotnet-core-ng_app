@@ -10,7 +10,7 @@ namespace dotnet_core
         public AutoMapperProfile()
         {
             CreateMap<Post, GetPostDto>();                
-            CreateMap<AddPostDto, Post>();
+            CreateMap<CreatePostDto, Post>();
             
         }
     }

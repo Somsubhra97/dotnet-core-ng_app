@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
+using AutoMapper;
 using dotnet_core.Data;
 
 namespace dotnet_core
@@ -30,7 +30,7 @@ namespace dotnet_core
         {
 
             services.AddControllers();            
-           
+            services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IPost, MockPost>();
         }
 

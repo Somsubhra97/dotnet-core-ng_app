@@ -3,6 +3,8 @@ using dotnet_core.Models;
 using dotnet_core.Dtos.Post;
 using System.Threading.Tasks;
 using System;
+using AutoMapper;
+using System.Linq;
 
 namespace dotnet_core.Data
 {
@@ -14,62 +16,90 @@ public class MockPost : IPost
         new Post{id=1, title="Post#2", content="Second Post"},
         new Post{id=2, title="Post#3", content="Thrid Post"}
     };
+
+    private readonly IMapper _mapper;     
+    public MockPost(IMapper mapper)
+    {  
+        _mapper = mapper;        
+
+    }
  
-    public async Task<ServiceResponse<List<Post>>> Getter(){
-        ServiceResponse<List<Post>> ob=new ServiceResponse<List<Post>>();
-        List<Post> op=new List<Post>();
-        
-        ob.Data=posts;
+    public async Task<ServiceResponse<List<GetPostDto>>> Getter(){
+        ServiceResponse<List<GetPostDto>> ob=new ServiceResponse<List<GetPostDto>>();
+        List<GetPostDto> op=new List<GetPostDto>();
+        foreach (Post i in posts) 
+        {
+            op.Add(_mapper.Map<GetPostDto>(i));
+        }
+        ob.Data=op;
         return ob;
     }
 
-    public async Task<ServiceResponse<Post>> GetPostById(int id){
-     ServiceResponse<Post> x=new ServiceResponse<Post>();     
+    public async Task<ServiceResponse<GetPostDto>> GetPostById(int id){
+     ServiceResponse<GetPostDto> ob=new ServiceResponse<GetPostDto>();  
        try{
-        foreach (Post cmd in posts) 
-        {
-            if(cmd.id==id)
-             x.Data=cmd;
-        } 
-        if(x==null) throw new Exception("NOT FOUND"); 
+         ob.Data= _mapper.Map<GetPostDto>(posts.FirstOrDefault(c=>c.id==id));     
+         if(ob.Data==null) throw new Exception("NOT FOUND"); 
        }
        catch(Exception ){
-        x.Success=false;
+        ob.Success=false;
        }        
-        return x;  
+        return ob;  
     }
 
-    public async Task<ServiceResponse<List<Post>>> AddPost(Post model){
-        ServiceResponse<List<Post>> ob=new ServiceResponse<List<Post>>();
-        posts.Add(model);
-        ob.Data=posts;
+    public async Task<ServiceResponse<List<GetPostDto>>> AddPost(CreatePostDto model){
+        ServiceResponse<List<GetPostDto>> ob=new ServiceResponse<List<GetPostDto>>();
+        List<GetPostDto> op=new List<GetPostDto>();
+
+         Post p = _mapper.Map<Post>(model);
+         Random r = new Random();         
+         p.id=r.Next(10,50);
+         posts.Add(p);        
+        foreach (Post i in posts) 
+        {
+            op.Add(_mapper.Map<GetPostDto>(i));
+        }
+        ob.Data=op;
 
         return ob;
     }
 
-    public async Task<ServiceResponse<List<Post>>> UpdatePost( Post model, int id){
-        ServiceResponse<List<Post>> ob=new ServiceResponse<List<Post>>();
+    public async Task<ServiceResponse<List<GetPostDto>>> UpdatePost( UpdatePostDto model, int id){
+        List<GetPostDto> op=new List<GetPostDto>();
+        ServiceResponse<List<GetPostDto>> ob=new ServiceResponse<List<GetPostDto>>();
+        
         foreach (Post cmd in posts){
             if(cmd.id==id){
                 cmd.content=model.content;
                 cmd.title=model.title;
             }
         }
-        ob.Data=posts;
+        foreach (Post i in posts) 
+        {
+            op.Add(_mapper.Map<GetPostDto>(i));
+        }
+        ob.Data=op;        
         return ob;
     }
 
-    public async Task<ServiceResponse<List<Post>>> Delete(int id){
-        ServiceResponse<List<Post>> ob=new ServiceResponse<List<Post>>();
-        List<Post> l=new List<Post>();
-        foreach (Post cmd in posts){
-            if(cmd.id!=id)
-               l.Add(cmd);            
-        }
-        posts=l;
-        ob.Data=posts;
+    public async Task<ServiceResponse<List<GetPostDto>>> Delete(int id){
+        ServiceResponse<List<GetPostDto>> ob=new ServiceResponse<List<GetPostDto>>();
+        
+        List<GetPostDto> l=new List<GetPostDto>();
+        List<Post> list=new List<Post>();
+        
+        foreach (Post i in posts){
+            if(i.id!=id){
+               l.Add(_mapper.Map<GetPostDto>(i));    
+               list.Add(i);
+               }        
+            }
+        
+        posts=list;
+        ob.Data=l;
         return ob;
+     }
     }
    }
- } 
+ 
     

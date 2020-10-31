@@ -35,7 +35,7 @@ namespace dotnet_core.Controllers
         [HttpGet("{id}", Name="GetPostById")]
         public async Task<IActionResult> GetPostById(int id)
         {
-             ServiceResponse<Post> x=await _repository.GetPostById(id);
+            var x=await _repository.GetPostById(id);
             if(x.Success)
               return Ok(x);  
             return NotFound();                
@@ -45,7 +45,7 @@ namespace dotnet_core.Controllers
  
    
     [HttpPost]
-    public async Task<IActionResult> Add(Post cmd){
+    public async Task<IActionResult> Add(CreatePostDto cmd){
        
             var ret=await _repository.AddPost(cmd); 
             Console.WriteLine(cmd) ;                     
@@ -55,7 +55,7 @@ namespace dotnet_core.Controllers
 
    
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Post cmd,int id){       
+    public async Task<IActionResult> Update(UpdatePostDto cmd,int id){       
             var ret=await _repository.UpdatePost(cmd,id);        
             if(!ret.Success){
                return NotFound(ret);
@@ -67,7 +67,7 @@ namespace dotnet_core.Controllers
     
     public async Task<IActionResult> Delete(int id)
         {
-            ServiceResponse<List<Post>> response = await _repository.Delete(id);
+            var response = await _repository.Delete(id);
             return Ok(response);
         }         
     

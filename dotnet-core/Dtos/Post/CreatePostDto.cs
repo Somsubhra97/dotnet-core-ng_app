@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-namespace Project.Dtos.Command
+namespace dotnet_core.Dtos.Post
 {
-    public class CreateCommandDto
+    public class CreatePostDto
     {
                 
         public string content { get; set; }
