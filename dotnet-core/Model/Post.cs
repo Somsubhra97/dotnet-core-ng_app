@@ -1,4 +1,4 @@
-//using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace dotnet_core.Models
 {
@@ -7,11 +7,11 @@ namespace dotnet_core.Models
         
         public int id { get; set; }
 
-       
+        [Required]
         public string content { get; set; }
         
-        
-        public string title { get; set; }        
+        [Required]
+        public string title { get; set; }       
        
         
     }

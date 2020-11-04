@@ -7,12 +7,13 @@ namespace dotnet_core.Data
 {
 public class MockPost : IPost
     {
-    private static List<Post> posts= new List<Post>
+    private static List<Post> posts= new List<Post>()
     {
         new Post{id=0, title="Post#1", content="My Post"},
-        new Post{id=1, title="Post#2", content="Second Post"},
-        new Post{id=2, title="Post#3", content="Thrid Post"}
+        new Post{id=1, title="Post#2", content="Second Post"}
+        
     };
+    
  
     public async Task<ServiceResponse<List<Post>>> Getter(){
         ServiceResponse<List<Post>> ob=new ServiceResponse<List<Post>>();
@@ -40,6 +41,9 @@ public class MockPost : IPost
 
     public async Task<ServiceResponse<List<Post>>> AddPost(Post model){
         ServiceResponse<List<Post>> ob=new ServiceResponse<List<Post>>();
+        
+        Random r = new Random();         
+        model.id=r.Next(10,50);
         posts.Add(model);
         ob.Data=posts;
 
@@ -52,6 +56,9 @@ public class MockPost : IPost
             if(cmd.id==id){
                 cmd.content=model.content;
                 cmd.title=model.title;
+            }
+            else{
+                ob.Success=false;
             }
         }
         ob.Data=posts;
