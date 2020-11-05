@@ -12,7 +12,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Microsoft.EntityFrameworkCore;
-using dotnet_core.Data;
+using dotnet_core.Data.Repo;
+using dotnet_core.Interfaces;
 
 namespace dotnet_core
 {
