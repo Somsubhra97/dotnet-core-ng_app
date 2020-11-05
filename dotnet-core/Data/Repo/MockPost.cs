@@ -3,7 +3,9 @@ using dotnet_core.Models;
 using System.Threading.Tasks;
 using System;
 
-namespace dotnet_core.Data
+using dotnet_core.Interfaces;
+
+namespace dotnet_core.Data.Repo
 {
 public class MockPost : IPost
     {

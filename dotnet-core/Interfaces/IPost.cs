@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using dotnet_core.Models;
+using dotnet_core.Model;
 using System.Threading.Tasks;
 
 
-namespace dotnet_core.Data
+namespace dotnet_core.interfaces
 {
     public interface IPost
     {                 
