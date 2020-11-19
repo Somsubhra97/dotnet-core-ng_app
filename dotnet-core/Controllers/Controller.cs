@@ -22,7 +22,7 @@ namespace dotnet_core.Controllers
            
         }
 
-        [HttpGet]        
+        [HttpGet]          
         public async Task<IActionResult> GetAll (){
            var ob=await _repository.Getter();
                     
