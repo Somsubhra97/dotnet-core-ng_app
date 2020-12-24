@@ -10,6 +10,7 @@ namespace dotnet_core.Controllers
 {
 
     [Route("api/posts")]
+  //[Route("[controller]")]
     [ApiController]
     public class CommandsController : ControllerBase
     {
@@ -32,6 +33,7 @@ namespace dotnet_core.Controllers
         
               
         [HttpGet("{id}")]
+       //[Route("post/{id}")]   // /commands/post/id
         public async Task<IActionResult> GetPostById(int id)
         {
             ServiceResponse<Post> x=await _repository.GetPostById(id);
