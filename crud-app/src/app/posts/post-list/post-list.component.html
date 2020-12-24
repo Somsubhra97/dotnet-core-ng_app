@@ -1,5 +1,5 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<mat-accordion multi="true" [routerLink]="[':/single', post.id] *ngIf="posts.length > 0 ">
+<mat-accordion multi="true" [routerLink]="['/post',post.id] *ngIf="posts.length > 0 ">
   <mat-expansion-panel *ngFor="let post of posts">
     <mat-expansion-panel-header>
       {{ post.title }}

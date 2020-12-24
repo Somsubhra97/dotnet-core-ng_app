@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { Router } from "@angular/router";
@@ -12,6 +12,7 @@ export class PostsService {
   private posts: Post[] = [];  
   private isLoading=true;
   private postsUpdated = new Subject<Data>();
+//private errorSubject=new Subject<string>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -21,7 +22,12 @@ export class PostsService {
 
   getPosts() {
     this.http
-      .get("http://localhost:5000/api/posts")
+      .get("http://localhost:5000/api/posts",{
+        headers:HttpHeaders({'Custom-Header':'Test'})
+      })
+      .pipe(map(res =>{
+        //Add transformation logic
+      })
        .subscribe(x => {
         this.posts=x.data;
         this.isLoading=false;
@@ -31,8 +37,22 @@ export class PostsService {
           isLoading:false
         }
         this.postsUpdated.next(receiver);
-      });
+      }, err=>{
+        //this.errorSubject.next(err.message);
+      })
   }
+
+   getPostById(id:number) {
+    return this.http
+      .get("http://localhost:5000/api/posts",{
+       params: new HttpParams().set('id',id)
+      })
+      .pipe(map(res =>{
+        //Add transformation logic
+      })
+  }
+
+
 
   getPost(id: number) {
     return {...this.posts.find(p=>p.id==id)};
